@@ -27,7 +27,7 @@ nav a {
   align-items: center;
   color: white;
   display: flex;
-  font-size: 1.3rem;
+  font-size: 1.4em;
   font-weight: 500;
   height: 100%;
   justify-content: center;
@@ -54,10 +54,10 @@ nav ul li {
 }
 
 #welcome-section {
+  align-content: center;
   color: white;
   display: flex;
   flex-direction: column;
-  align-content: center;
   justify-content: center;
   height: 100vh;
   text-align: center;
@@ -70,8 +70,18 @@ nav ul li {
 #welcome-section .description i {
   margin-right: 10px;
 }
+#welcome-section .description .fa-react {
+  --fa-animation-duration: 5s;
+}
 #welcome-section .description.react {
   color: #7cc5d9;
+}
+
+#profile-picture {
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  margin: 30px auto 20px auto;
 }
 
 @media only screen and (max-width : 600px) {
