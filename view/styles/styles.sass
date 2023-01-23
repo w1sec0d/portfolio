@@ -4,6 +4,7 @@ $primary: #ea580c
 $primaryDark: #be4b0c
 $background: #1c1917
 $white: #f0f0f0
+$react-blue: #7cc5d9
 
 $media-desktop: "only screen and (max-width : 1024px)"
 $media-tablet: "only screen and (max-width : 768px)"
@@ -71,10 +72,15 @@ nav
     font-weight: bold
     font-size: 2.5rem
 
+    #name
+        color: $primary
+
     .description
         i
             margin-right: 10px
 
+    .description.react
+        color: $react-blue
 // @media #{$media-desktop}
 //     background: red
 
@@ -85,5 +91,6 @@ nav
     html
         font-size: 14px
 
-// @media #{$media-mobile-sm}
-//     background: red
+@media #{$media-mobile-sm}
+    html
+        font-size: 12px

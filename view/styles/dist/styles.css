@@ -64,12 +64,23 @@ nav ul li {
   font-weight: bold;
   font-size: 2.5rem;
 }
+#welcome-section #name {
+  color: #ea580c;
+}
 #welcome-section .description i {
   margin-right: 10px;
+}
+#welcome-section .description.react {
+  color: #7cc5d9;
 }
 
 @media only screen and (max-width : 600px) {
   html {
     font-size: 14px;
+  }
+}
+@media only screen and (max-width : 480px) {
+  html {
+    font-size: 12px;
   }
 }
