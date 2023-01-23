@@ -5,6 +5,11 @@ $primaryDark: #be4b0c
 $background: #1c1917
 $white: #f0f0f0
 
+$media-desktop: "only screen and (max-width : 1024px)"
+$media-tablet: "only screen and (max-width : 768px)"
+$media-mobile: "only screen and (max-width : 600px)"
+$media-mobile-sm: "only screen and (max-width : 480px)"
+
 *
     box-sizing: border-box
     padding: 0
@@ -69,3 +74,16 @@ nav
     .description
         i
             margin-right: 10px
+
+// @media #{$media-desktop}
+//     background: red
+
+// @media #{$media-tablet}
+//     background: red
+
+@media #{$media-mobile}
+    html
+        font-size: 14px
+
+// @media #{$media-mobile-sm}
+//     background: red
