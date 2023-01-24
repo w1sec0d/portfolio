@@ -61,6 +61,12 @@ nav
             justify-content: center
             width: 100%
 
+@keyframes scrollme
+    0%
+        transform: translateY(0px)
+    100%
+        transform: translateY(10px)
+
 #welcome-section
 
     align-content: center
@@ -68,6 +74,7 @@ nav
     display: flex
     flex-direction: column
     justify-content: center
+    padding-top: 50px
     height: 100vh
     text-align: center
     font-weight: bold
@@ -84,6 +91,10 @@ nav
 
     .description.react
         color: $react-blue
+
+    .fa-chevron-down
+        animation: scrollme 2s ease-in 0s infinite alternate
+        margin-top: 30px
 
 #profile-picture
     border-radius: 50%
@@ -103,4 +114,4 @@ nav
 
 @media #{$media-mobile-sm}
     html
-        font-size: 12px
+        font-size: 10px

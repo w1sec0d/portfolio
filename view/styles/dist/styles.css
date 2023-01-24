@@ -53,12 +53,21 @@ nav ul li {
   width: 100%;
 }
 
+@keyframes scrollme {
+  0% {
+    transform: translateY(0px);
+  }
+  100% {
+    transform: translateY(10px);
+  }
+}
 #welcome-section {
   align-content: center;
   color: white;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding-top: 50px;
   height: 100vh;
   text-align: center;
   font-weight: bold;
@@ -76,6 +85,10 @@ nav ul li {
 #welcome-section .description.react {
   color: #7cc5d9;
 }
+#welcome-section .fa-chevron-down {
+  animation: scrollme 2s ease-in 0s infinite alternate;
+  margin-top: 30px;
+}
 
 #profile-picture {
   border-radius: 50%;
@@ -91,6 +104,6 @@ nav ul li {
 }
 @media only screen and (max-width : 480px) {
   html {
-    font-size: 12px;
+    font-size: 10px;
   }
 }
