@@ -1,11 +1,14 @@
 @import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800&display=swap")
 
+// COLOR VARIABLES 
 $primary: #ea580c
-$primaryDark: #be4b0c
+$primary-dark: #be4b0c
 $background: #1c1917
+$background2: #2F4858
 $white: #f0f0f0
 $react-blue: #7cc5d9
 
+// RESPONSIVE VARIABLES
 $media-desktop: "only screen and (max-width : 1024px)"
 $media-tablet: "only screen and (max-width : 768px)"
 $media-mobile: "only screen and (max-width : 600px)"
@@ -23,18 +26,21 @@ body
     background: $background
     font-family: Nunito, sans-serif
 
+// NAVBAR STYLES
+
 nav
-    background: $primaryDark
+    background: $primary-dark
     align-items: center
     display: flex
     height: 70px
     justify-content: flex-end
     position: fixed
     width: 100%
+    z-index: 10
 
     a
         align-items: center
-        color: white
+        color: $white
         display: flex
         font-size: 1.4em
         font-weight: 500
@@ -61,6 +67,8 @@ nav
             justify-content: center
             width: 100%
 
+// WELCOME SECTION STYLES
+
 @keyframes scrollme
     0%
         transform: translateY(0px)
@@ -68,9 +76,8 @@ nav
         transform: translateY(10px)
 
 #welcome-section
-
     align-content: center
-    color: white
+    color: $white
     display: flex
     flex-direction: column
     justify-content: center
@@ -92,16 +99,34 @@ nav
     .description.react
         color: $react-blue
 
+    #profile-picture
+        border-radius: 50%
+        width: 200px
+        height: 200px
+        margin: 30px auto 20px auto
+
     .fa-chevron-down
         animation: scrollme 2s ease-in 0s infinite alternate
         margin-top: 30px
 
-#profile-picture
-    border-radius: 50%
-    width: 200px
-    height: 200px
-    margin: 30px auto 20px auto
+// ABOUT ME SECTION STYLES
+#about-me
+    background: $background2
+    padding: 40px 30px
+    color: $white
+    h1
+        text-decoration: underline
 
+// SCROLLBAR STYLING
+body::-webkit-scrollbar
+    width: 10px
+
+body::-webkit-scrollbar-thumb
+    background-color: #3d3d3d
+    border-radius: 20px
+    border: 3px solid transparent
+
+// RESPONSIVE MEDIA QUERIES
 // @media #{$media-desktop}
 //     background: red
 
