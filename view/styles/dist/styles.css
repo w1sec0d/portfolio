@@ -103,7 +103,15 @@ nav ul li {
   color: #f0f0f0;
 }
 #about-me h1 {
-  text-decoration: underline;
+  background: #f0f0f0;
+  color: black;
+  font-weight: 900;
+  text-transform: uppercase;
+  width: 200px;
+  text-align: center;
+}
+#about-me #intro {
+  margin-top: 20px;
 }
 
 body::-webkit-scrollbar {
