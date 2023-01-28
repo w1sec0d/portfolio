@@ -117,21 +117,80 @@ nav ul li {
   fill: #2F4858;
 }
 
+.custom-shape-divider-top-1674861476 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+.custom-shape-divider-top-1674861476 svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 87px;
+}
+.custom-shape-divider-top-1674861476 .shape-fill {
+  fill: #2F4858;
+}
+
 #about-me {
   background: #2F4858;
   padding: 40px 30px;
   color: #f0f0f0;
+  font-size: 1.2rem;
+  padding-top: 50px;
 }
 #about-me h1 {
   background: #f0f0f0;
-  color: black;
+  color: #18181B;
   font-weight: 900;
   text-transform: uppercase;
   width: 200px;
   text-align: center;
+  letter-spacing: 2px;
 }
 #about-me #intro {
   margin-top: 20px;
+  font-size: 1.2em;
+}
+#about-me .skills-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 50px 0;
+}
+#about-me .skills-section .skill-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #f0f0f0;
+  width: 280px;
+  height: 300px;
+  text-align: center;
+  border-radius: 10px;
+  color: #18181B;
+  margin: 10px 15px;
+  padding: 15px;
+}
+#about-me .skills-section .skill-card .skill-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#about-me .skills-section .skill-card i {
+  font-size: 3.5em;
+  margin: 15px 0;
+}
+
+#projects {
+  position: relative;
+  padding: 100px;
+  background: #BDA79E;
 }
 
 body::-webkit-scrollbar {

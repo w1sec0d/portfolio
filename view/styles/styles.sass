@@ -6,7 +6,9 @@ $primary-dark: #be4b0c
 $background: #1c1917
 $background2: #2F4858
 $white: #f0f0f0
+$black: #18181B
 $react-blue: #7cc5d9
+$gray: #BDA79E
 
 // RESPONSIVE VARIABLES
 $media-desktop: "only screen and (max-width : 1024px)"
@@ -121,31 +123,87 @@ nav
     line-height: 0
     transform: rotate(180deg)
 
-
     & svg
         position: relative
         display: block
         width: calc(132% + 1.3px)
         height: 101px
 
+    & .shape-fill
+        fill: $background2
+
+.custom-shape-divider-top-1674861476
+    position: absolute
+    top: 0
+    left: 0
+    width: 100%
+    overflow: hidden
+    line-height: 0
+
+    & svg
+        position: relative
+        display: block
+        width: calc(100% + 1.3px)
+        height: 87px
 
     & .shape-fill
-        fill: #2F4858
+        fill: $background2
 
 // ABOUT ME SECTION STYLES
 #about-me
     background: $background2
     padding: 40px 30px
     color: $white
+    font-size: 1.2rem
+    padding-top: 50px
+
     h1
         background: $white
-        color: black
+        color: $black
         font-weight: 900
         text-transform: uppercase
         width: 200px
         text-align: center
+        letter-spacing: 2px
     #intro
         margin-top: 20px
+        font-size: 1.2em
+
+    .skills-section
+        display: flex
+        align-items: center
+        justify-content: center
+        flex-wrap: wrap
+        width: 100%
+        padding: 50px 0
+
+        .skill-card
+            display: flex
+            flex-direction: column
+            align-items: center
+            justify-content: center
+            background: $white
+            width: 280px
+            height: 300px
+            text-align: center
+            border-radius: 10px
+            color: $black
+            margin: 10px 15px
+            padding: 15px
+
+            .skill-title
+                display: flex
+                align-items: center
+                justify-content: center
+
+            i
+                font-size: 3.5em
+                margin: 15px 0
+// PROJECTS SECTION
+#projects
+    position: relative
+    padding: 100px
+    background: $gray
 
 // SCROLLBAR STYLING
 body::-webkit-scrollbar
