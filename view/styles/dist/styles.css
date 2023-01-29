@@ -14,6 +14,26 @@ body {
   font-family: Nunito, sans-serif;
 }
 
+.title {
+  background: #f0f0f0;
+  color: #18181B;
+  font-weight: 900;
+  text-transform: uppercase;
+  width: 200px;
+  text-align: center;
+  letter-spacing: 2px;
+}
+
+.dark {
+  background: #2F4858;
+  color: #f0f0f0;
+}
+
+.light {
+  background: #f0f0f0;
+  color: #2F4858;
+}
+
 nav {
   background: #be4b0c;
   align-items: center;
@@ -137,7 +157,7 @@ nav ul li {
 
 #about-me {
   background: #2F4858;
-  padding: 40px 30px;
+  padding: 50px 80px;
   color: #f0f0f0;
   font-size: 1.2rem;
   padding-top: 50px;
@@ -169,7 +189,7 @@ nav ul li {
   align-items: center;
   justify-content: center;
   background: #f0f0f0;
-  width: 280px;
+  width: 300px;
   height: 300px;
   text-align: center;
   border-radius: 10px;
