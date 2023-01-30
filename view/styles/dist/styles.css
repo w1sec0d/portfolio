@@ -224,7 +224,8 @@ nav ul li {
   padding: 50px 0;
 }
 #projects .project-container .project-tile {
-  width: 500px;
+  width: 100%;
+  max-width: 500px;
   height: auto;
   border-radius: 10px;
   background: #1c1917;
@@ -266,5 +267,22 @@ body::-webkit-scrollbar-thumb {
 @media only screen and (max-width : 480px) {
   html {
     font-size: 10px;
+  }
+
+  section, #projects {
+    padding: 70px 20px;
+  }
+
+  #about-me .skills-section .skill-card {
+    width: 200px;
+    height: 200px;
+  }
+
+  #projects {
+    padding-top: 120px;
+  }
+
+  .project-tile {
+    height: min-content;
   }
 }

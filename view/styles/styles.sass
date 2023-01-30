@@ -234,7 +234,8 @@ nav
         padding: 50px 0
 
         .project-tile
-            width: 500px
+            width: 100%
+            max-width: 500px
             height: auto
             border-radius: 10px
             background: $background
@@ -280,3 +281,18 @@ body::-webkit-scrollbar-thumb
 @media #{$media-mobile-sm}
     html
         font-size: 10px
+
+    section, #projects
+        padding: 70px 20px
+
+    #about-me
+        .skills-section
+            .skill-card
+                width: 200px
+                height: 200px
+
+    #projects
+        padding-top: 120px
+
+    .project-tile
+        height: min-content
