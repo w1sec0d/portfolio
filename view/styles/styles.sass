@@ -5,7 +5,7 @@ $primary: #ea580c
 $primary-dark: #be4b0c
 $background: #1c1917
 $background2: #2F4858
-$white: #f0f0f0
+$white: #dddada
 $black: #18181B
 $react-blue: #7cc5d9
 $gray: #BDA79E
@@ -36,14 +36,21 @@ body
     width: 200px
     text-align: center
     letter-spacing: 2px
+    margin-bottom: 20px
 
-.dark
+.title.dark
     background: $background2
     color: $white
 
-.light
-    background: $white
-    color: $background2
+.title.light
+    background: $black
+    color: $white
+
+section
+    padding: 80px 80px
+
+    .intro
+        font-size: 1.2em
 
 // NAVBAR STYLES
 
@@ -169,10 +176,9 @@ nav
 // ABOUT ME SECTION STYLES
 #about-me
     background: $background2
-    padding: 50px 80px
     color: $white
     font-size: 1.2rem
-    padding-top: 50px
+
     h1
         background: $white
         color: $black
@@ -181,9 +187,6 @@ nav
         width: 200px
         text-align: center
         letter-spacing: 2px
-    #intro
-        margin-top: 20px
-        font-size: 1.2em
 
     .skills-section
         display: flex
@@ -220,6 +223,39 @@ nav
     position: relative
     padding: 100px
     background: $gray
+    font-size: 1.2rem
+
+    .project-container
+        display: flex
+        align-items: center
+        justify-content: center
+        flex-wrap: wrap
+        width: 100%
+        padding: 50px 0
+
+        .project-tile
+            width: 500px
+            height: auto
+            border-radius: 10px
+            background: $background
+            margin: 10px 20px
+            overflow: hidden
+            text-align: center
+
+            a
+                display: flex
+                flex-direction: column
+                width: 100%
+                height: 100%
+
+                p
+                    text-decoration: none
+                    color: $white
+                    padding: 20px 0px
+
+                img
+                    width: 100%
+                    height: 250px
 
 // SCROLLBAR STYLING
 body::-webkit-scrollbar

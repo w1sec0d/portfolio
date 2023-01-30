@@ -15,23 +15,31 @@ body {
 }
 
 .title {
-  background: #f0f0f0;
+  background: #dddada;
   color: #18181B;
   font-weight: 900;
   text-transform: uppercase;
   width: 200px;
   text-align: center;
   letter-spacing: 2px;
+  margin-bottom: 20px;
 }
 
-.dark {
+.title.dark {
   background: #2F4858;
-  color: #f0f0f0;
+  color: #dddada;
 }
 
-.light {
-  background: #f0f0f0;
-  color: #2F4858;
+.title.light {
+  background: #18181B;
+  color: #dddada;
+}
+
+section {
+  padding: 80px 80px;
+}
+section .intro {
+  font-size: 1.2em;
 }
 
 nav {
@@ -46,7 +54,7 @@ nav {
 }
 nav a {
   align-items: center;
-  color: #f0f0f0;
+  color: #dddada;
   display: flex;
   font-size: 1.4em;
   font-weight: 500;
@@ -84,7 +92,7 @@ nav ul li {
 }
 #welcome-section {
   align-content: center;
-  color: #f0f0f0;
+  color: #dddada;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -157,23 +165,17 @@ nav ul li {
 
 #about-me {
   background: #2F4858;
-  padding: 50px 80px;
-  color: #f0f0f0;
+  color: #dddada;
   font-size: 1.2rem;
-  padding-top: 50px;
 }
 #about-me h1 {
-  background: #f0f0f0;
+  background: #dddada;
   color: #18181B;
   font-weight: 900;
   text-transform: uppercase;
   width: 200px;
   text-align: center;
   letter-spacing: 2px;
-}
-#about-me #intro {
-  margin-top: 20px;
-  font-size: 1.2em;
 }
 #about-me .skills-section {
   display: flex;
@@ -188,7 +190,7 @@ nav ul li {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: #f0f0f0;
+  background: #dddada;
   width: 300px;
   height: 300px;
   text-align: center;
@@ -211,6 +213,39 @@ nav ul li {
   position: relative;
   padding: 100px;
   background: #BDA79E;
+  font-size: 1.2rem;
+}
+#projects .project-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 50px 0;
+}
+#projects .project-container .project-tile {
+  width: 500px;
+  height: auto;
+  border-radius: 10px;
+  background: #1c1917;
+  margin: 10px 20px;
+  overflow: hidden;
+  text-align: center;
+}
+#projects .project-container .project-tile a {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+#projects .project-container .project-tile a p {
+  text-decoration: none;
+  color: #dddada;
+  padding: 20px 0px;
+}
+#projects .project-container .project-tile a img {
+  width: 100%;
+  height: 250px;
 }
 
 body::-webkit-scrollbar {
