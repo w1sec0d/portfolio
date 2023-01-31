@@ -47,7 +47,7 @@ body
     color: $white
 
 section
-    padding: 80px 80px
+    padding: 80px 50px
 
     .intro
         font-size: 1.2em
@@ -239,6 +239,7 @@ nav
             height: auto
             border-radius: 10px
             background: $background
+            object-fit: contain
             margin: 10px 20px
             overflow: hidden
             text-align: center
@@ -256,7 +257,8 @@ nav
 
                 img
                     width: 100%
-                    height: 250px
+                    height: 200px
+                    object-fit: cover
 
 // SCROLLBAR STYLING
 body::-webkit-scrollbar
@@ -267,29 +269,42 @@ body::-webkit-scrollbar-thumb
     border-radius: 20px
     border: 3px solid transparent
 
-// RESPONSIVE MEDIA QUERIES
+//RESPONSIVE MEDIA QUERIES
 // @media #{$media-desktop}
-//     background: red
 
-// @media #{$media-tablet}
-//     background: red
+@media #{$media-tablet}
+    #about-me
+        .skills-section
+            .skill-card
+                width: 250px
+                height: 250px
+
+    // CURVE STYLES
+    .custom-shape-divider-bottom-1674679957
+        & svg
+            width: calc(132% + 1.3px)
+            height: 60px
+
+    .custom-shape-divider-top-1674861476
+        & svg
+            width: calc(160% + 1.3px)
+            height: 70px
 
 @media #{$media-mobile}
     html
         font-size: 14px
+    #about-me
+        font-size: 1.3em
+        .intro
+            text-align: center
+            margin-bottom: 0px
 
 @media #{$media-mobile-sm}
     html
-        font-size: 10px
+        font-size: 12px
 
     section, #projects
         padding: 70px 20px
-
-    #about-me
-        .skills-section
-            .skill-card
-                width: 200px
-                height: 200px
 
     #projects
         padding-top: 120px
