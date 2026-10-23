@@ -1,0 +1,146 @@
+---
+import { routes, t, type Locale } from '../i18n';
+import { SITE } from '../data/site';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const ui = t(locale);
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <p class="footer-name">{SITE.name}</p>
+      <p class="mono footer-role">{SITE.role[locale]} / {SITE.location[locale]}</p>
+    </div>
+
+    <nav class="footer-nav" aria-label={ui.nav.primary}>
+      <a href={routes.home[locale]}>{ui.nav.home}</a>
+      <a href={routes.projects[locale]}>{ui.nav.projects}</a>
+      <a href={routes.about[locale]}>{ui.nav.about}</a>
+      <a href={routes.contact[locale]}>{ui.nav.contact}</a>
+    </nav>
+
+    <ul class="footer-social" aria-label={ui.hero.linksLabel}>
+      <li>
+        <a href={SITE.links.github} target="_blank" rel="noopener noreferrer">GitHub</a>
+      </li>
+      <li>
+        <a href={SITE.links.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      </li>
+      <li>
+        <a href={`mailto:${SITE.email}`}>{ui.contact.email}</a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="container footer-base">
+    <p class="mono">© {year} {SITE.name}. {ui.footer.rights}</p>
+    <p class="mono">{ui.footer.builtWith}</p>
+    <a class="mono footer-top" href="#main">{ui.footer.backToTop}</a>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    padding-block: clamp(2.5rem, 5vw, 4rem) 2rem;
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr) auto;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .footer-name {
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .footer-role {
+    margin-top: 0.5rem;
+    font-size: 0.68rem;
+    color: var(--muted-dim);
+  }
+
+  .footer-nav {
+    display: grid;
+    gap: 0.45rem;
+    justify-items: start;
+  }
+
+  .footer-nav a,
+  .footer-social a {
+    color: var(--muted);
+    font-size: 0.88rem;
+    transition: color 0.15s ease;
+  }
+
+  .footer-nav a:hover,
+  .footer-social a:hover {
+    color: var(--orange-hover);
+  }
+
+  .footer-social {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.25rem;
+    justify-content: flex-end;
+  }
+
+  .footer-social a {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .footer-base {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem 1.5rem;
+    margin-top: clamp(2rem, 4vw, 3rem);
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .footer-base .mono {
+    font-size: 0.64rem;
+    color: var(--muted-dim);
+  }
+
+  .footer-top {
+    color: var(--muted);
+  }
+
+  .footer-top:hover {
+    color: var(--orange-hover);
+  }
+
+  @media (max-width: 820px) {
+    .footer-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .footer-social {
+      grid-column: 1 / -1;
+      justify-content: flex-start;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }
+</style>

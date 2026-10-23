@@ -1,0 +1,125 @@
+---
+import SectionHead from './SectionHead.astro';
+import { t, type Locale } from '../i18n';
+import { experience } from '../data/experience';
+
+interface Props {
+  locale: Locale;
+  showAll?: boolean;
+}
+
+const { locale, showAll = false } = Astro.props;
+const ui = t(locale);
+const entries = showAll ? experience : experience.filter((entry) => entry.featured);
+---
+
+<section id="experience" class="section">
+  <div class="container">
+    <SectionHead
+      label={ui.experience.label}
+      title={ui.experience.title}
+      note={ui.experience.note}
+    />
+
+    <ol class="timeline">
+      {
+        entries.map((entry) => (
+          <li class="entry">
+            <div class="entry-period mono">
+              {entry.start} — {entry.end === 'present' ? ui.experience.present : entry.end}
+              {entry.end === 'present' && <span class="pulse" aria-hidden="true" />}
+            </div>
+            <div class="entry-body">
+              <h3>
+                {entry.role[locale]}
+                <span class="entry-org">/ {entry.org}</span>
+              </h3>
+              <p class="entry-location mono">{entry.location[locale]}</p>
+              <ul class="entry-bullets">
+                {entry.bullets.map((bullet) => <li>{bullet[locale]}</li>)}
+              </ul>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .timeline {
+    border-top: 1px solid var(--border);
+  }
+
+  .entry {
+    display: grid;
+    grid-template-columns: minmax(0, 190px) minmax(0, 1fr);
+    gap: 1.25rem 3rem;
+    padding-block: 1.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .entry-period {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding-top: 0.2rem;
+    font-size: 0.7rem;
+    color: var(--muted);
+  }
+
+  .pulse {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--orange);
+    box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.12);
+    flex: none;
+  }
+
+  .entry h3 {
+    font-size: 1.12rem;
+    font-weight: 600;
+  }
+
+  .entry-org {
+    color: var(--muted);
+    font-weight: 400;
+  }
+
+  .entry-location {
+    margin-top: 0.35rem;
+    font-size: 0.68rem;
+    color: var(--muted-dim);
+  }
+
+  .entry-bullets {
+    display: grid;
+    gap: 0.45rem;
+    margin-top: 0.9rem;
+    color: var(--muted);
+    font-size: 0.96rem;
+  }
+
+  .entry-bullets li {
+    position: relative;
+    padding-left: 1rem;
+  }
+
+  .entry-bullets li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.68em;
+    width: 5px;
+    height: 1px;
+    background: var(--orange);
+  }
+
+  @media (max-width: 720px) {
+    .entry {
+      grid-template-columns: 1fr;
+      gap: 0.6rem;
+    }
+  }
+</style>

@@ -1,0 +1,330 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ExperienceSection from './ExperienceSection.astro';
+import ContactSection from './ContactSection.astro';
+import { t, type Locale } from '../i18n';
+import { SITE } from '../data/site';
+import { focusAreas } from '../data/focus';
+import { education, certifications, languages } from '../data/about';
+import { experience } from '../data/experience';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const ui = t(locale);
+const current = experience[0];
+---
+
+<BaseLayout
+  locale={locale}
+  title={ui.meta.aboutTitle}
+  description={ui.meta.aboutDescription}
+>
+  <header class="about-head">
+    <div class="container about-head-grid">
+      <div>
+        <p class="mono">{ui.about.label}</p>
+        <h1>{ui.about.title}</h1>
+        <p class="lede about-intro">{ui.about.intro}</p>
+      </div>
+
+      <aside class="profile-panel">
+        <p class="mono">{ui.about.currentlyLabel}</p>
+        <p class="profile-role">{current.role[locale]}</p>
+        <p class="profile-org">{current.org}</p>
+
+        <dl class="profile-meta">
+          <div>
+            <dt class="mono">{ui.about.locationLabel}</dt>
+            <dd>{SITE.location[locale]}</dd>
+          </div>
+          <div>
+            <dt class="mono">{ui.about.focusLabel}</dt>
+            <dd>{ui.about.focusValue}</dd>
+          </div>
+          <div>
+            <dt class="mono">{ui.about.languagesLabel}</dt>
+            <dd>{languages.map((lang) => ui.languages[lang.nameKey]).join(' / ')}</dd>
+          </div>
+        </dl>
+      </aside>
+    </div>
+  </header>
+
+  <section class="section about-focus" aria-labelledby="focus-heading">
+    <div class="container">
+      <h2 id="focus-heading" class="sr-only">{ui.about.focusLabel}</h2>
+
+      <div class="focus-grid">
+        {
+          focusAreas.map((area) => (
+            <article class="focus-item">
+              <h3>{area.title[locale]}</h3>
+              <p>{area.body[locale]}</p>
+            </article>
+          ))
+        }
+      </div>
+
+      <blockquote class="review-note">
+        <p>{ui.about.reviewNote}</p>
+      </blockquote>
+    </div>
+  </section>
+
+  <ExperienceSection locale={locale} showAll={true} />
+
+  <section class="section about-credentials">
+    <div class="container cred-grid">
+      <div>
+        <h2>{ui.about.educationLabel}</h2>
+        <ul class="edu-list">
+          {
+            education.map((entry) => (
+              <li>
+                <p class="mono edu-date">{entry.start} — {entry.end}</p>
+                <h3>{entry.institution}</h3>
+                <p class="edu-program">{entry.program[locale]}</p>
+                <p class="edu-note">{entry.note[locale]}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div>
+        <h2>{ui.about.certificationsLabel}</h2>
+        <ul class="cert-list">
+          {
+            certifications.map((cert) => (
+              <li>
+                <span class="cert-name">{cert.name}</span>
+                <span class="cert-meta mono">{cert.issuer} / {cert.date}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div>
+        <h2>{ui.about.languagesLabel}</h2>
+        <ul class="lang-list">
+          {
+            languages.map((lang) => (
+              <li>
+                <span class="lang-name">{ui.languages[lang.nameKey]}</span>
+                <span class="lang-level mono">
+                  {ui.languages[lang.levelKey]}
+                  {lang.detail ? ` / ${lang.detail}` : ''}
+                </span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <ContactSection locale={locale} />
+</BaseLayout>
+
+<style>
+  .about-head {
+    padding-block: clamp(2.5rem, 6vw, 4.5rem) clamp(2.25rem, 5vw, 3.5rem);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .about-head-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: clamp(2rem, 6vw, 5rem);
+    align-items: start;
+  }
+
+  .about-head h1 {
+    max-width: 18ch;
+    margin-top: 0.9rem;
+    font-size: clamp(2.4rem, 4.8vw, 4rem);
+    letter-spacing: -0.035em;
+  }
+
+  .about-intro {
+    max-width: 52ch;
+    margin-top: 1.25rem;
+  }
+
+  .profile-panel {
+    padding-left: clamp(1.5rem, 4vw, 3rem);
+    border-left: 1px solid var(--border);
+  }
+
+  .profile-role {
+    margin-top: 0.6rem;
+    font-size: 1.15rem;
+    font-weight: 600;
+  }
+
+  .profile-org {
+    margin-top: 0.3rem;
+    color: var(--orange);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .profile-meta {
+    display: grid;
+    gap: 0.9rem;
+    margin-top: 1.5rem;
+  }
+
+  .profile-meta dt {
+    font-size: 0.6rem;
+    color: var(--muted-dim);
+  }
+
+  .profile-meta dd {
+    margin: 0.15rem 0 0;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  .focus-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0 clamp(2rem, 4vw, 3.5rem);
+  }
+
+  .focus-item {
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .focus-item h3 {
+    margin-bottom: 0.6rem;
+    font-size: 1.15rem;
+  }
+
+  .focus-item p {
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+
+  .review-note {
+    margin: clamp(2.5rem, 5vw, 4rem) 0 0;
+    padding: 0.25rem 0 0.25rem 1.5rem;
+    border-left: 2px solid var(--orange);
+  }
+
+  .review-note p {
+    max-width: 62ch;
+    color: var(--text);
+    font-size: 1.02rem;
+  }
+
+  .cred-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: start;
+  }
+
+  .cred-grid h2 {
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid var(--border);
+    font-size: 1.1rem;
+  }
+
+  .edu-list,
+  .cert-list,
+  .lang-list {
+    display: grid;
+    gap: 1.25rem;
+    margin-top: 1.25rem;
+  }
+
+  .edu-date {
+    font-size: 0.62rem;
+    color: var(--muted-dim);
+  }
+
+  .edu-list h3 {
+    margin-top: 0.3rem;
+    font-size: 0.98rem;
+  }
+
+  .edu-program {
+    margin-top: 0.2rem;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  .edu-note {
+    margin-top: 0.3rem;
+    color: var(--muted-dim);
+    font-size: 0.8rem;
+  }
+
+  .cert-list li {
+    display: grid;
+    gap: 0.2rem;
+  }
+
+  .cert-name {
+    font-size: 0.92rem;
+  }
+
+  .cert-meta {
+    font-size: 0.62rem;
+    color: var(--muted-dim);
+  }
+
+  .lang-list li {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .lang-name {
+    font-size: 0.95rem;
+  }
+
+  .lang-level {
+    font-size: 0.62rem;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    color: var(--muted-dim);
+  }
+
+  @media (max-width: 900px) {
+    .about-head-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .profile-panel {
+      padding-left: 0;
+      padding-top: 1.5rem;
+      border-left: 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .focus-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .cred-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .cred-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

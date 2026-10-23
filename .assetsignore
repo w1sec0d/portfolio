@@ -1,15 +1,25 @@
-# Never publish repository metadata, dependencies, or build tooling as public assets.
+# Never publish repository metadata, dependencies, agent docs, or build tooling.
 .git
 .gitignore
 .vscode
+.astro
 .cloudflare
 .wrangler
+.agents
+.opencode
 node_modules
+dist
 package.json
 package-lock.json
+astro.config.mjs
+tsconfig.json
 cloudflare.config.ts
 wrangler.config.ts
 README.md
+AGENTS.md
+MEMORY.md
+skills-lock.json
+instructions.md
 .assetsignore
 .dev.vars*
 .env*

@@ -7,6 +7,10 @@ export default defineConfig({
     "domains": ["carlosramirez.app"],
     "observability": {
       "enabled": true
+    },
+    "assets": {
+      "htmlHandling": "auto-trailing-slash",
+      "notFoundHandling": "404-page"
     }
   }
 });

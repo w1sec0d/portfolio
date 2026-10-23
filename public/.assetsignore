@@ -1,0 +1,5 @@
+# Keep documentation and placeholders out of the published bundle.
+*.md
+.gitkeep
+_worker.js
+_routes.json

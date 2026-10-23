@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HeroSection from '../../components/HeroSection.astro';
+import SelectedProjects from '../../components/SelectedProjects.astro';
+import ExperienceSection from '../../components/ExperienceSection.astro';
+import SkillsSection from '../../components/SkillsSection.astro';
+import ContactSection from '../../components/ContactSection.astro';
+import { t } from '../../i18n';
+
+const locale = 'es' as const;
+const ui = t(locale);
+---
+
+<BaseLayout
+  locale={locale}
+  title={ui.meta.homeTitle}
+  description={ui.meta.homeDescription}
+>
+  <HeroSection locale={locale} />
+  <SelectedProjects locale={locale} />
+  <ExperienceSection locale={locale} />
+  <SkillsSection locale={locale} />
+  <ContactSection locale={locale} />
+</BaseLayout>

@@ -1,0 +1,57 @@
+---
+interface Props {
+  label: string;
+  title: string;
+  note?: string;
+}
+
+const { label, title, note } = Astro.props;
+---
+
+<header class="sec-head">
+  <p class="mono sec-label">{label}</p>
+  <div class="sec-row">
+    <h2>{title}</h2>
+    {note && <p class="sec-note">{note}</p>}
+  </div>
+</header>
+
+<style>
+  .sec-head {
+    margin-bottom: clamp(2rem, 4vw, 3.5rem);
+  }
+
+  .sec-label {
+    display: block;
+    margin-bottom: 0.9rem;
+  }
+
+  .sec-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: 1.25rem 3rem;
+    align-items: end;
+  }
+
+  .sec-row h2 {
+    max-width: 20ch;
+  }
+
+  .sec-note {
+    max-width: 40ch;
+    color: var(--muted);
+    font-size: 0.975rem;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 760px) {
+    .sec-row {
+      grid-template-columns: 1fr;
+      gap: 0.9rem;
+    }
+
+    .sec-row h2 {
+      max-width: 24ch;
+    }
+  }
+</style>

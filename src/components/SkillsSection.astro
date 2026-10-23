@@ -1,0 +1,91 @@
+---
+import SectionHead from './SectionHead.astro';
+import { t, type Locale } from '../i18n';
+import { skillGroups } from '../data/skills';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const ui = t(locale);
+---
+
+<section id="capabilities" class="section">
+  <div class="container">
+    <SectionHead
+      label={ui.skills.label}
+      title={ui.skills.title}
+      note={ui.skills.note}
+    />
+
+    <div class="skills-grid">
+      {
+        skillGroups.map((group) => (
+          <section class="skill-group">
+            <h3>{group.title[locale]}</h3>
+            <ul>
+              {group.items.map((item) => <li>{item}</li>)}
+            </ul>
+          </section>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 clamp(2rem, 5vw, 4rem);
+  }
+
+  .skill-group {
+    padding-block: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .skill-group h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    margin-bottom: 0.9rem;
+    font-size: 1.02rem;
+  }
+
+  .skill-group h3::before {
+    content: '';
+    width: 9px;
+    height: 1px;
+    background: var(--orange);
+    flex: none;
+  }
+
+  .skill-group ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 0.9rem;
+    color: var(--muted);
+    font-size: 0.94rem;
+  }
+
+  .skill-group li {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+  }
+
+  .skill-group li:not(:last-child)::after {
+    content: '/';
+    color: var(--border-strong);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+  }
+
+  @media (max-width: 720px) {
+    .skills-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,464 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectVisual from './ProjectVisual.astro';
+import { routes, t, type Locale } from '../i18n';
+import { getAdjacentProjects, type Project } from '../data/projects';
+import { SITE } from '../data/site';
+
+interface Props {
+  project: Project;
+  locale: Locale;
+}
+
+const { project, locale } = Astro.props;
+const ui = t(locale);
+const { previous, next } = getAdjacentProjects(project.slug);
+
+const bodySections = [
+  { id: 'overview', label: ui.detail.overview, body: project.detail.overview[locale] },
+  { id: 'problem', label: ui.detail.problem, body: project.detail.problem[locale] },
+  { id: 'role', label: ui.detail.role, body: project.detail.role[locale] },
+  { id: 'architecture', label: ui.detail.architecture, body: project.detail.architecture[locale] },
+  { id: 'implementation', label: ui.detail.implementation, body: project.detail.implementation[locale] },
+];
+
+const toc = [
+  ...bodySections.map((section) => ({ id: section.id, label: section.label })),
+  { id: 'decisions', label: ui.detail.decisions },
+  { id: 'results', label: ui.detail.results },
+  ...(project.detail.limitations
+    ? [{ id: 'limitations', label: ui.detail.limitations }]
+    : []),
+  { id: 'technologies', label: ui.detail.technologies },
+  { id: 'links', label: ui.detail.links },
+];
+---
+
+<BaseLayout
+  locale={locale}
+  title={`${project.name} — ${SITE.name}`}
+  description={project.summary[locale]}
+>
+  <header class="detail-head">
+    <div class="container">
+      <a class="back mono" href={routes.projects[locale]}>{ui.detail.back}</a>
+
+      <div class="detail-meta mono">
+        <span class="accent">{project.category[locale]}</span>
+        {project.year && <span>/ {project.year}</span>}
+      </div>
+
+      <h1>{project.name}</h1>
+      <p class="lede detail-summary">{project.summary[locale]}</p>
+
+      <div class="detail-actions">
+        {
+          project.links.map((link) => (
+            <a
+              class="btn btn-secondary"
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {ui.projects[link.key]}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </header>
+
+  <div class="container detail-visual-wrap">
+    <figure class="detail-visual">
+      <ProjectVisual
+        visual={project.visual}
+        locale={locale}
+        name={project.name}
+      />
+    </figure>
+  </div>
+
+  <section class="section detail-body">
+    <div class="container detail-grid">
+      <aside class="detail-aside">
+        <div class="aside-block">
+          <p class="mono aside-title">{ui.detail.atAGlance}</p>
+          <dl class="aside-meta">
+            <div>
+              <dt class="mono">{ui.detail.focusLabel}</dt>
+              <dd>{project.category[locale]}</dd>
+            </div>
+            {
+              project.year && (
+                <div>
+                  <dt class="mono">{ui.detail.yearLabel}</dt>
+                  <dd>{project.year}</dd>
+                </div>
+              )
+            }
+          </dl>
+        </div>
+
+        <nav class="aside-toc" aria-label={ui.detail.contents}>
+          <p class="mono aside-title">{ui.detail.contents}</p>
+          <ol>
+            {
+              toc.map((item, index) => (
+                <li>
+                  <a href={`#${item.id}`}>
+                    <span class="mono">{String(index + 1).padStart(2, '0')}</span>
+                    {item.label}
+                  </a>
+                </li>
+              ))
+            }
+          </ol>
+        </nav>
+      </aside>
+
+      <div class="detail-main">
+        {
+          bodySections.map((section) => (
+            <section class="detail-block" aria-labelledby={section.id}>
+              <h2 id={section.id}>{section.label}</h2>
+              <p>{section.body}</p>
+            </section>
+          ))
+        }
+
+        <section class="detail-block" aria-labelledby="decisions">
+          <h2 id="decisions">{ui.detail.decisions}</h2>
+          <dl class="decisions">
+            {
+              project.detail.decisions.map((decision) => (
+                <div class="decision">
+                  <dt>{decision.title[locale]}</dt>
+                  <dd>{decision.body[locale]}</dd>
+                </div>
+              ))
+            }
+          </dl>
+        </section>
+
+        <section class="detail-block" aria-labelledby="results">
+          <h2 id="results">{ui.detail.results}</h2>
+          <p>{project.detail.results[locale]}</p>
+        </section>
+
+        {
+          project.detail.limitations && (
+            <section class="detail-block" aria-labelledby="limitations">
+              <h2 id="limitations">{ui.detail.limitations}</h2>
+              <p>{project.detail.limitations[locale]}</p>
+            </section>
+          )
+        }
+
+        <section class="detail-block" aria-labelledby="technologies">
+          <h2 id="technologies">{ui.detail.technologies}</h2>
+          <ul class="tech-list">
+            {project.technologies.map((tech) => <li>{tech}</li>)}
+          </ul>
+        </section>
+
+        <section class="detail-block" aria-labelledby="links">
+          <h2 id="links">{ui.detail.links}</h2>
+          <ul class="link-list">
+            {
+              project.links.map((link) => (
+                <li>
+                  <a href={link.href} target="_blank" rel="noopener noreferrer">
+                    {ui.projects[link.key]}
+                    <span class="link-url">
+                      {link.href.replace('https://github.com/', '')}
+                    </span>
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </section>
+      </div>
+    </div>
+  </section>
+
+  <nav class="project-pager" aria-label={ui.nav.projects}>
+    <div class="container pager-grid">
+      <a class="pager-link" href={routes.project(previous.slug, locale)}>
+        <span class="mono">{ui.detail.previous}</span>
+        <span class="pager-name">{previous.name}</span>
+      </a>
+      <a class="pager-link pager-next" href={routes.project(next.slug, locale)}>
+        <span class="mono">{ui.detail.next}</span>
+        <span class="pager-name">{next.name}</span>
+      </a>
+    </div>
+  </nav>
+</BaseLayout>
+
+<style>
+  .detail-head {
+    padding-block: clamp(2.25rem, 5vw, 3.5rem) clamp(1.75rem, 4vw, 2.75rem);
+  }
+
+  .back {
+    display: inline-block;
+    margin-bottom: 1.5rem;
+    color: var(--muted);
+    font-size: 0.7rem;
+    transition: color 0.15s ease;
+  }
+
+  .back:hover {
+    color: var(--orange-hover);
+  }
+
+  .detail-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    font-size: 0.7rem;
+    color: var(--muted);
+  }
+
+  .detail-meta .accent {
+    color: var(--orange);
+  }
+
+  .detail-head h1 {
+    margin-top: 0.7rem;
+    font-size: clamp(2.6rem, 6vw, 5rem);
+    letter-spacing: -0.04em;
+  }
+
+  .detail-summary {
+    max-width: 56ch;
+    margin-top: 1.1rem;
+  }
+
+  .detail-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  .detail-visual-wrap {
+    padding-bottom: clamp(2rem, 4vw, 3rem);
+  }
+
+  .detail-visual {
+    margin: 0;
+    padding: 10px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+  }
+
+  .detail-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 240px) minmax(0, 1fr);
+    gap: clamp(2rem, 5vw, 4.5rem);
+    align-items: start;
+  }
+
+  .detail-aside {
+    position: sticky;
+    top: 5.5rem;
+    display: grid;
+    gap: 1.75rem;
+  }
+
+  .aside-title {
+    display: block;
+    margin-bottom: 0.7rem;
+    font-size: 0.64rem;
+    color: var(--muted-dim);
+  }
+
+  .aside-meta {
+    display: grid;
+    gap: 0.8rem;
+  }
+
+  .aside-meta dt {
+    font-size: 0.6rem;
+    color: var(--muted-dim);
+  }
+
+  .aside-meta dd {
+    margin: 0.15rem 0 0;
+    color: var(--text);
+    font-size: 0.9rem;
+  }
+
+  .aside-toc ol {
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .aside-toc a {
+    display: flex;
+    gap: 0.6rem;
+    color: var(--muted);
+    font-size: 0.82rem;
+    transition: color 0.15s ease;
+  }
+
+  .aside-toc a:hover {
+    color: var(--orange-hover);
+  }
+
+  .aside-toc .mono {
+    padding-top: 0.18rem;
+    font-size: 0.58rem;
+    color: var(--muted-dim);
+  }
+
+  .detail-main {
+    display: grid;
+    gap: clamp(2rem, 4vw, 3rem);
+  }
+
+  .detail-block {
+    max-width: 62ch;
+  }
+
+  .detail-block h2 {
+    margin-bottom: 0.75rem;
+    font-size: var(--step-1);
+  }
+
+  .detail-block p {
+    color: var(--muted);
+  }
+
+  .decisions {
+    display: grid;
+    gap: 0;
+  }
+
+  .decision {
+    padding-block: 1rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .decision:first-child {
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  .decision dt {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .decision dd {
+    margin: 0.35rem 0 0;
+    color: var(--muted);
+  }
+
+  .tech-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 0.9rem;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+  }
+
+  .tech-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+  }
+
+  .tech-list li:not(:last-child)::after {
+    content: '/';
+    color: var(--border-strong);
+  }
+
+  .link-list {
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .link-list a {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    padding-bottom: 0.45rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+  }
+
+  .link-list a:hover {
+    color: var(--orange-hover);
+    border-color: var(--orange);
+  }
+
+  .link-url {
+    color: var(--muted-dim);
+    font-size: 0.7rem;
+  }
+
+  .project-pager {
+    padding-block: clamp(2rem, 4vw, 3rem);
+    border-top: 1px solid var(--border);
+  }
+
+  .pager-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .pager-link {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .pager-link .mono {
+    font-size: 0.62rem;
+    color: var(--muted-dim);
+  }
+
+  .pager-name {
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+
+  .pager-next {
+    align-items: flex-end;
+    text-align: right;
+  }
+
+  .pager-link:hover .pager-name {
+    color: var(--orange-hover);
+  }
+
+  @media (max-width: 900px) {
+    .detail-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .detail-aside {
+      position: static;
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .pager-grid {
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+
+    .pager-next {
+      align-items: flex-start;
+      text-align: left;
+    }
+  }
+</style>

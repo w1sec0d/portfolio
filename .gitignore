@@ -1,3 +1,7 @@
+# build output
+dist
+.astro
+
 # wrangler files
 .wrangler
 .dev.vars*

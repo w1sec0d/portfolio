@@ -1,0 +1,126 @@
+---
+import { t, type Locale } from '../i18n';
+import { ASSETS, SITE } from '../data/site';
+import { firstExisting } from '../lib/assets';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const ui = t(locale);
+
+const portraitSrc = firstExisting([
+  ASSETS.portrait,
+  '/images/carlos-ramirez.jpg',
+  '/images/carlos-ramirez.jpeg',
+  '/images/carlos-ramirez.png',
+  '/images/carlos-ramirez.avif',
+]);
+---
+
+<figure class="portrait">
+  <div class="portrait-frame">
+    {
+      portraitSrc ? (
+        <img
+          src={portraitSrc}
+          alt={ui.hero.portraitAlt}
+          width="800"
+          height="1000"
+          loading="eager"
+          decoding="async"
+        />
+      ) : (
+        <div class="placeholder" role="img" aria-label={ui.hero.portraitAlt}>
+          <svg viewBox="0 0 400 500" aria-hidden="true" focusable="false">
+            <rect width="400" height="500" fill="#12161B" />
+            <g stroke="#28303A" stroke-width="0.5" opacity="0.65">
+              <path d="M0 100h400M0 200h400M0 300h400M0 400h400" />
+              <path d="M100 0v500M200 0v500M300 0v500" />
+            </g>
+            <g fill="none" stroke="#3A4653" stroke-width="1.4">
+              <circle cx="200" cy="188" r="62" />
+              <path d="M92 500c0-78 48-134 108-134s108 56 108 134" />
+              <path d="M154 168c8-30 84-30 92 0" opacity="0.55" />
+            </g>
+            <g>
+              <circle cx="310" cy="118" r="4.5" fill="#F97316" />
+              <circle cx="310" cy="118" r="14" fill="none" stroke="#F97316" stroke-width="1" opacity="0.45" />
+            </g>
+            <g stroke="#F97316" stroke-width="1.3" opacity="0.9" fill="none">
+              <path d="M16 46V16h30" />
+              <path d="M354 16h30v30" />
+              <path d="M384 454v30h-30" />
+              <path d="M46 484H16v-30" />
+            </g>
+          </svg>
+        </div>
+      )
+    }
+  </div>
+  <figcaption class="portrait-meta mono">
+    <span class="dot" aria-hidden="true"></span>
+    {portraitSrc ? SITE.name : ui.hero.portraitPending}
+  </figcaption>
+</figure>
+
+<style>
+  .portrait {
+    margin: 0;
+  }
+
+  .portrait-frame {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    padding: 8px;
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.45);
+  }
+
+  .portrait-frame::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    width: 46px;
+    height: 2px;
+    background: var(--orange);
+  }
+
+  .portrait-frame img,
+  .placeholder {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .placeholder {
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+  }
+
+  .placeholder svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .portrait-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+    color: var(--muted);
+    font-size: 0.68rem;
+  }
+
+  .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--orange);
+    flex: none;
+  }
+</style>

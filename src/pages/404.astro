@@ -1,0 +1,54 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { t } from '../i18n';
+
+const locale = 'en' as const;
+const ui = t(locale);
+---
+
+<BaseLayout
+  locale={locale}
+  title={`404 — ${ui.notFound.title}`}
+  description={ui.notFound.body}
+  noindex={true}
+>
+  <section class="not-found">
+    <div class="container">
+      <p class="mono">{ui.notFound.title}</p>
+      <h1>404</h1>
+      <p class="lede not-found-note">{ui.notFound.body}</p>
+      <div class="not-found-actions">
+        <a class="btn btn-primary" href="/">{ui.notFound.home}</a>
+        <a class="btn btn-secondary" href="/es/" hreflang="es" lang="es">
+          Ver en español
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .not-found {
+    padding-block: clamp(4rem, 12vw, 9rem);
+  }
+
+  .not-found h1 {
+    margin-top: 0.5rem;
+    font-size: clamp(4.5rem, 15vw, 10rem);
+    line-height: 0.9;
+    letter-spacing: -0.06em;
+    color: var(--orange);
+  }
+
+  .not-found-note {
+    max-width: 42ch;
+    margin-top: 1.25rem;
+  }
+
+  .not-found-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+</style>

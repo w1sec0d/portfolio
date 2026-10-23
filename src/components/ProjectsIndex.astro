@@ -1,0 +1,221 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { routes, t, type Locale } from '../i18n';
+import { projects } from '../data/projects';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const ui = t(locale);
+---
+
+<BaseLayout
+  locale={locale}
+  title={ui.meta.projectsTitle}
+  description={ui.meta.projectsDescription}
+>
+  <header class="page-head">
+    <div class="container">
+      <p class="mono">{ui.projects.allLabel}</p>
+      <h1>{ui.projects.allTitle}</h1>
+      <p class="lede page-note">{ui.projects.allNote}</p>
+    </div>
+  </header>
+
+  <section class="section archive-section" aria-label={ui.projects.allLabel}>
+    <div class="container">
+      <div class="archive">
+        <div class="archive-head mono" aria-hidden="true">
+          <span>{ui.projects.index}</span>
+          <span>{ui.projects.project}</span>
+          <span>{ui.projects.focus}</span>
+          <span>{ui.projects.stack}</span>
+          <span>{ui.projects.links}</span>
+        </div>
+
+        <ul class="archive-list">
+          {
+            projects.map((project, index) => (
+              <li class="archive-row">
+                <span class="archive-index mono">
+                  {String(index + 1).padStart(2, '0')}
+                </span>
+
+                <div class="archive-project">
+                  <a class="archive-name" href={routes.project(project.slug, locale)}>
+                    {project.name}
+                  </a>
+                  <p class="archive-summary">{project.summary[locale]}</p>
+                </div>
+
+                <div class="archive-focus">
+                  <span class="archive-cat mono">{project.category[locale]}</span>
+                  {project.year && (
+                    <span class="archive-year mono">/ {project.year}</span>
+                  )}
+                </div>
+
+                <div class="archive-stack mono">
+                  {project.technologies.slice(0, 4).join(' / ')}
+                </div>
+
+                <div class="archive-links">
+                  <a href={routes.project(project.slug, locale)}>
+                    {ui.projects.details}
+                  </a>
+                  {project.links.map((link) => (
+                    <a
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`${ui.projects[link.key]} — ${link.href}`}
+                    >
+                      {ui.projects[link.key]}
+                    </a>
+                  ))}
+                </div>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-head {
+    padding-block: clamp(2.5rem, 6vw, 4.5rem) clamp(2rem, 4vw, 3rem);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .page-head h1 {
+    max-width: 22ch;
+    margin-top: 0.9rem;
+    font-size: var(--step-4);
+  }
+
+  .page-note {
+    max-width: 55ch;
+    margin-top: 1.25rem;
+  }
+
+  .archive-head,
+  .archive-row {
+    display: grid;
+    grid-template-columns:
+      2.5rem minmax(0, 1.5fr) minmax(0, 0.8fr)
+      minmax(0, 0.9fr) auto;
+    gap: 1.5rem;
+    align-items: start;
+  }
+
+  .archive-head {
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.62rem;
+    color: var(--muted-dim);
+  }
+
+  .archive-row {
+    padding-block: 1.6rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .archive-index {
+    padding-top: 0.25rem;
+    color: var(--orange);
+    font-size: 0.72rem;
+  }
+
+  .archive-name {
+    font-size: 1.32rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  .archive-name:hover {
+    color: var(--orange-hover);
+  }
+
+  .archive-summary {
+    max-width: 46ch;
+    margin-top: 0.4rem;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  .archive-focus {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .archive-cat {
+    font-size: 0.66rem;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    color: var(--text);
+  }
+
+  .archive-year {
+    font-size: 0.62rem;
+    color: var(--muted-dim);
+  }
+
+  .archive-stack {
+    font-size: 0.66rem;
+    line-height: 1.7;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    color: var(--muted-dim);
+  }
+
+  .archive-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    align-items: flex-end;
+  }
+
+  .archive-links a {
+    padding-bottom: 0.1rem;
+    border-bottom: 1px solid transparent;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .archive-links a:hover {
+    color: var(--orange-hover);
+    border-color: var(--orange);
+  }
+
+  @media (max-width: 900px) {
+    .archive-head {
+      display: none;
+    }
+
+    .archive-row {
+      grid-template-columns: 1fr;
+      gap: 0.55rem;
+    }
+
+    .archive-index {
+      display: none;
+    }
+
+    .archive-links {
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-top: 0.4rem;
+    }
+  }
+</style>

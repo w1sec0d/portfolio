@@ -1,0 +1,157 @@
+---
+import type { Locale } from '../i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+
+const copy =
+  locale === 'es'
+    ? {
+        system: 'SISTEMA / TRAZA',
+        edge: 'BORDE-01',
+        imu: 'IMU / ACEL',
+        sense: 'SENSAR',
+        infer: 'INFERIR',
+        sync: 'SINCRONIZAR',
+      }
+    : {
+        system: 'SYSTEM / TRACE',
+        edge: 'EDGE-01',
+        imu: 'IMU / ACCEL',
+        sense: 'SENSE',
+        infer: 'INFER',
+        sync: 'SYNC',
+      };
+---
+
+<svg
+  class="art"
+  viewBox="0 0 560 640"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+  aria-hidden="true"
+  focusable="false"
+>
+  <defs>
+    <pattern id="hea-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0v40" fill="none" stroke="#28303A" stroke-width="0.6" opacity="0.5" />
+    </pattern>
+    <pattern id="hea-grid-lg" width="160" height="160" patternUnits="userSpaceOnUse">
+      <path d="M160 0H0v160" fill="none" stroke="#3A4653" stroke-width="0.9" opacity="0.55" />
+    </pattern>
+    <linearGradient id="hea-fade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity="0.95" />
+      <stop offset="0.7" stop-color="#fff" stop-opacity="0.8" />
+      <stop offset="1" stop-color="#fff" stop-opacity="0" />
+    </linearGradient>
+    <mask id="hea-mask">
+      <rect width="560" height="640" fill="url(#hea-fade)" />
+    </mask>
+    <linearGradient id="hea-scan" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#F97316" stop-opacity="0" />
+      <stop offset="0.5" stop-color="#F97316" stop-opacity="0.5" />
+      <stop offset="1" stop-color="#F97316" stop-opacity="0" />
+    </linearGradient>
+  </defs>
+
+  <g mask="url(#hea-mask)">
+    <rect width="560" height="640" fill="url(#hea-grid)" />
+    <rect width="560" height="640" fill="url(#hea-grid-lg)" />
+
+    <!-- coordinate ticks -->
+    <g stroke="#3A4653" stroke-width="1" opacity="0.8" fill="none">
+      <path
+        d="M40 0v12M80 0v6M120 0v12M160 0v6M200 0v12M240 0v6M280 0v12M320 0v6M360 0v12M400 0v6M440 0v12M480 0v6M520 0v12"
+      />
+      <path
+        d="M0 40h12M0 80h6M0 120h12M0 160h6M0 200h12M0 240h6M0 280h12M0 320h6M0 360h12M0 400h6M0 440h12M0 480h6M0 520h12M0 560h6M0 600h12"
+      />
+    </g>
+
+    <!-- annotations -->
+    <g
+      font-family="IBM Plex Mono, monospace"
+      font-size="8"
+      letter-spacing="1.2"
+      fill="#7F8894"
+    >
+      <text x="40" y="30">{copy.system}</text>
+      <text x="420" y="30">{copy.edge}</text>
+    </g>
+
+    <!-- system graph -->
+    <g stroke="#3A4653" stroke-width="1.1" opacity="0.9" fill="none">
+      <path d="M96 132H196V96H300" />
+      <path d="M196 96V150H300" />
+      <path d="M300 96H420V136" />
+      <path d="M420 136H456V220" />
+      <path d="M456 220H360V258" />
+      <path d="M300 150H232V232" />
+      <path d="M232 232H120V268" />
+      <path d="M232 232V330H300" />
+      <path d="M360 258H300V330" />
+      <path d="M120 268H96V132" />
+    </g>
+
+    <g>
+      <circle cx="96" cy="132" r="4.5" fill="#12161B" stroke="#3A4653" stroke-width="1.2" />
+      <circle cx="196" cy="96" r="4.5" fill="#12161B" stroke="#3A4653" stroke-width="1.2" />
+      <circle cx="420" cy="136" r="4.5" fill="#12161B" stroke="#3A4653" stroke-width="1.2" />
+      <circle cx="232" cy="232" r="4.5" fill="#12161B" stroke="#3A4653" stroke-width="1.2" />
+      <circle cx="120" cy="268" r="4.5" fill="#12161B" stroke="#3A4653" stroke-width="1.2" />
+      <circle cx="300" cy="330" r="4.5" fill="#12161B" stroke="#3A4653" stroke-width="1.2" />
+      <circle cx="300" cy="96" r="5.5" fill="#F97316" />
+      <circle cx="456" cy="220" r="5.5" fill="#F97316" />
+      <circle cx="360" cy="258" r="5.5" fill="#F97316" />
+    </g>
+
+    <!-- inertial signal -->
+    <g>
+      <path d="M40 420H520" stroke="#28303A" stroke-width="1" stroke-dasharray="2 7" />
+      <path
+        d="M40 420h28l10-18 10 36 10-24h22l10-30 10 58 10-40h26l10-10 10 20h24l10-38 10 74 10-52h30l10 8 10-16h30l10-22 10 44 10-28h28l10-14 10 28 10-14h42"
+        stroke="#A7AFBA"
+        stroke-width="1.2"
+        opacity="0.85"
+        stroke-linejoin="round"
+      />
+      <circle cx="270" cy="456" r="3.2" fill="#F97316" />
+      <circle cx="270" cy="456" r="9" stroke="#F97316" stroke-width="1" opacity="0.5" />
+      <circle cx="400" cy="442" r="2.4" fill="#F97316" opacity="0.9" />
+      <text
+        x="40"
+        y="400"
+        font-family="IBM Plex Mono, monospace"
+        font-size="8"
+        letter-spacing="1.2"
+        fill="#7F8894">{copy.imu}</text
+      >
+    </g>
+
+    <!-- data-flow layers -->
+    <g>
+      <rect x="56" y="500" width="210" height="26" rx="2" fill="#12161B" stroke="#28303A" />
+      <rect x="56" y="540" width="210" height="26" rx="2" fill="#12161B" stroke="#28303A" />
+      <rect x="56" y="580" width="210" height="26" rx="2" fill="#12161B" stroke="#28303A" />
+      <path d="M266 513h34v54M266 553h34M266 593h34" fill="none" stroke="#3A4653" stroke-width="1.1" />
+      <circle cx="300" cy="553" r="3.5" fill="#F97316" />
+      <g font-family="IBM Plex Mono, monospace" font-size="8" letter-spacing="1" fill="#A7AFBA">
+        <text x="68" y="517">{copy.sense}</text>
+        <text x="68" y="557">{copy.infer}</text>
+        <text x="68" y="597">{copy.sync}</text>
+      </g>
+    </g>
+
+    <rect x="0" y="430" width="560" height="1" fill="url(#hea-scan)" opacity="0.6" />
+  </g>
+</svg>
+
+<style>
+  .art {
+    width: 100%;
+    height: 100%;
+  }
+</style>

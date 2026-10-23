@@ -1,0 +1,58 @@
+---
+import { alternatePath, t, type Locale } from '../i18n';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const ui = t(locale);
+const alternate = alternatePath(Astro.url.pathname);
+const otherLocale: Locale = alternate.locale;
+---
+
+<div class="lang" role="group" aria-label={ui.lang.label}>
+  <span class="lang-current" aria-current="true">
+    {locale === 'en' ? ui.lang.en : ui.lang.es}
+    <span class="sr-only"> — {ui.lang.current}</span>
+  </span>
+  <span class="lang-sep" aria-hidden="true">/</span>
+  <a
+    href={alternate.href}
+    hreflang={otherLocale}
+    lang={otherLocale}
+    aria-label={ui.lang.switchTo}
+  >
+    {otherLocale === 'en' ? ui.lang.en : ui.lang.es}
+  </a>
+</div>
+
+<style>
+  .lang {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    line-height: 1;
+  }
+
+  .lang-current {
+    color: var(--text);
+  }
+
+  .lang-sep {
+    color: var(--border-strong);
+  }
+
+  .lang a {
+    color: var(--muted-dim);
+    transition: color 0.15s ease;
+  }
+
+  .lang a:hover {
+    color: var(--orange-hover);
+  }
+</style>

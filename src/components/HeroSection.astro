@@ -1,0 +1,239 @@
+---
+import HeroEngineeringArt from './HeroEngineeringArt.astro';
+import PortraitFrame from './PortraitFrame.astro';
+import { t, type Locale } from '../i18n';
+import { ASSETS, SITE } from '../data/site';
+import { publicFileExists } from '../lib/assets';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const ui = t(locale);
+const cvAvailable = publicFileExists(ASSETS.cv);
+---
+
+<section class="hero" aria-labelledby="hero-heading">
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <div class="hero-meta mono">
+        <span>{SITE.location[locale]}</span>
+        <span class="hero-availability">
+          <span class="dot" aria-hidden="true"></span>
+          {ui.hero.availability}
+        </span>
+      </div>
+
+      <p class="mono hero-label reveal">{ui.hero.label}</p>
+      <h1 id="hero-heading" class="reveal reveal-2">{ui.hero.headline}</h1>
+      <p class="lede hero-support reveal reveal-3">{ui.hero.support}</p>
+
+      <div class="hero-actions reveal reveal-4">
+        <a class="btn btn-primary" href="#selected-projects">
+          {ui.hero.viewProjects}
+        </a>
+        {
+          cvAvailable ? (
+            <a class="btn btn-secondary" href={ASSETS.cv} download>
+              {ui.hero.downloadCv}
+            </a>
+          ) : (
+            <span class="btn btn-secondary is-disabled" aria-disabled="true">
+              {ui.hero.downloadCv}
+              <span class="btn-note">· {ui.hero.cvPending}</span>
+            </span>
+          )
+        }
+      </div>
+
+      <ul class="hero-social reveal reveal-4" aria-label={ui.hero.linksLabel}>
+        <li>
+          <a
+            href={SITE.links.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`GitHub — ${SITE.links.github}`}
+          >
+            GitHub
+          </a>
+        </li>
+        <li>
+          <a
+            href={SITE.links.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`LinkedIn — ${SITE.links.linkedin}`}
+          >
+            LinkedIn
+          </a>
+        </li>
+        <li>
+          <a href={`mailto:${SITE.email}`} aria-label={`${ui.contact.email} — ${SITE.email}`}>
+            {ui.contact.email}
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="hero-visual reveal reveal-3">
+      <div class="hero-art-wrap" aria-hidden="true">
+        <HeroEngineeringArt locale={locale} />
+      </div>
+      <div class="hero-portrait">
+        <PortraitFrame locale={locale} />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    padding-block: clamp(2.25rem, 5vw, 4rem) clamp(3.5rem, 8vw, 6.5rem);
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
+    gap: clamp(2rem, 6vw, 5rem);
+    align-items: center;
+  }
+
+  .hero-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 0.9rem;
+    margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+    border-bottom: 1px solid var(--border);
+    font-size: 0.7rem;
+  }
+
+  .hero-availability {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    color: var(--muted);
+  }
+
+  .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--orange);
+    flex: none;
+  }
+
+  .hero-label {
+    margin-bottom: 1.25rem;
+    color: var(--muted);
+  }
+
+  h1 {
+    max-width: 16ch;
+    font-size: clamp(2.55rem, 4.8vw, 4.4rem);
+    font-weight: 600;
+    line-height: 1.02;
+    letter-spacing: -0.035em;
+  }
+
+  .hero-support {
+    max-width: 46ch;
+    margin-top: clamp(1.25rem, 2.5vw, 1.75rem);
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: clamp(1.75rem, 3vw, 2.25rem);
+  }
+
+  .hero-social {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.4rem;
+    margin-top: clamp(1.75rem, 3vw, 2.5rem);
+    padding-top: 1.1rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .hero-social a {
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.15s ease;
+  }
+
+  .hero-social a:hover {
+    color: var(--orange-hover);
+  }
+
+  .hero-visual {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    min-height: clamp(430px, 40vw, 540px);
+  }
+
+  .hero-art-wrap {
+    position: absolute;
+    inset: -6% -8% -7% -14%;
+    z-index: 0;
+    opacity: 0.95;
+  }
+
+  .hero-portrait {
+    position: relative;
+    z-index: 1;
+    width: min(70%, 330px);
+    margin-left: auto;
+  }
+
+  @media (max-width: 960px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+
+    .hero-visual {
+      width: 100%;
+      max-width: 540px;
+      min-height: 440px;
+      margin-inline: auto;
+    }
+
+    .hero-portrait {
+      width: min(64%, 310px);
+    }
+
+    h1 {
+      max-width: 18ch;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .hero-meta {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.35rem;
+    }
+
+    .hero-visual {
+      min-height: 380px;
+    }
+
+    .hero-portrait {
+      width: 72%;
+    }
+
+    .hero-art-wrap {
+      inset: -2% -4% -4% -8%;
+    }
+  }
+</style>
