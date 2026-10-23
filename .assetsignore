@@ -1,0 +1,15 @@
+# Never publish repository metadata, dependencies, or build tooling as public assets.
+.git
+.gitignore
+.vscode
+.cloudflare
+.wrangler
+node_modules
+package.json
+package-lock.json
+cloudflare.config.ts
+wrangler.config.ts
+README.md
+.assetsignore
+.dev.vars*
+.env*
