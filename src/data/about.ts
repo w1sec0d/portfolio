@@ -40,7 +40,6 @@ export const education: EducationEntry[] = [
       en: 'Software Programming Technician',
       es: 'Técnico en Programación de Software',
     },
-    // TODO(verify): CV lists Jan 2018, LinkedIn lists Jan 2019.
     start: '2018',
     end: '2020',
     note: {

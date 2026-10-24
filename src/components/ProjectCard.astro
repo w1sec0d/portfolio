@@ -2,6 +2,7 @@
 import ProjectVisual from './ProjectVisual.astro';
 import { routes, t, type Locale } from '../i18n';
 import type { Project } from '../data/projects';
+import { publicFileExists } from '../lib/assets';
 
 interface Props {
   project: Project;
@@ -12,6 +13,12 @@ interface Props {
 const { project, locale, index } = Astro.props;
 const ui = t(locale);
 const href = routes.project(project.slug, locale);
+const primaryImage = project.gallery?.[locale]?.find((image) =>
+  publicFileExists(image.src)
+);
+const links = project.links.filter(
+  (link) => !link.href.startsWith('/') || publicFileExists(link.href)
+);
 ---
 
 <article class="project-row" aria-labelledby={`project-${project.slug}-title`}>
@@ -41,7 +48,7 @@ const href = routes.project(project.slug, locale);
     <div class="project-links">
       <a class="project-cta" href={href}>{ui.projects.openProject}</a>
       {
-        project.links.map((link) => (
+        links.map((link) => (
           <a
             href={link.href}
             target="_blank"
@@ -61,6 +68,9 @@ const href = routes.project(project.slug, locale);
       locale={locale}
       name={project.name}
       decorative={true}
+      src={primaryImage?.src}
+      alt={primaryImage?.alt[locale]}
+      fit={primaryImage?.fit}
     />
   </div>
 </article>

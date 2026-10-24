@@ -1,0 +1,76 @@
+---
+import type { Locale } from '../i18n';
+import type { ProjectImage } from '../data/projects';
+
+interface Props {
+  images: ProjectImage[];
+  locale: Locale;
+}
+
+const { images, locale } = Astro.props;
+---
+
+<div class="project-gallery">
+  {
+    images.map((image, index) => (
+      <figure class:list={['gallery-item', { 'gallery-primary': index === 0 }]}>
+        <img
+          class:list={['gallery-image', { 'is-contain': image.fit === 'contain' }]}
+          src={image.src}
+          alt={image.alt[locale]}
+          width="1600"
+          height="1024"
+          loading={index === 0 ? 'eager' : 'lazy'}
+          decoding="async"
+        />
+        <figcaption class="mono">{image.alt[locale]}</figcaption>
+      </figure>
+    ))
+  }
+</div>
+
+<style>
+  .project-gallery {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(0.75rem, 1.5vw, 1.25rem);
+  }
+
+  .gallery-item {
+    margin: 0;
+    padding: 8px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+  }
+
+  .gallery-primary {
+    grid-column: 1 / -1;
+  }
+
+  .gallery-item img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 25 / 16;
+    object-fit: cover;
+    object-position: top center;
+  }
+
+  .gallery-item img.is-contain {
+    object-fit: contain;
+    object-position: center;
+    background: var(--bg);
+  }
+
+  .gallery-item figcaption {
+    margin-top: 0.55rem;
+    color: var(--muted-dim);
+    font-size: 0.64rem;
+  }
+
+  @media (max-width: 720px) {
+    .project-gallery {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

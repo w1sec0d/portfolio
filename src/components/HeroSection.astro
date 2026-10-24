@@ -11,7 +11,8 @@ interface Props {
 
 const { locale } = Astro.props;
 const ui = t(locale);
-const cvAvailable = publicFileExists(ASSETS.cv);
+const cvPath = ASSETS.cv[locale];
+const cvAvailable = publicFileExists(cvPath);
 ---
 
 <section class="hero" aria-labelledby="hero-heading">
@@ -35,7 +36,7 @@ const cvAvailable = publicFileExists(ASSETS.cv);
         </a>
         {
           cvAvailable ? (
-            <a class="btn btn-secondary" href={ASSETS.cv} download>
+            <a class="btn btn-secondary" href={cvPath} download>
               {ui.hero.downloadCv}
             </a>
           ) : (

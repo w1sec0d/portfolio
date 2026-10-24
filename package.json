@@ -5,7 +5,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "deploy": "astro build && wrangler deploy --assets ./dist --name portfolio --compatibility-date 2026-10-19 --domains carlosramirez.app"
+    "deploy": "astro build && wrangler deploy --config wrangler.deploy.jsonc"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.12",
@@ -16,5 +16,8 @@
     "cf": "^1.0.0-beta.20",
     "typescript": "^6.0.3",
     "wrangler": "^4.152.0"
+  },
+  "dependencies": {
+    "@astrojs/cloudflare": "^14.4.2"
   }
 }

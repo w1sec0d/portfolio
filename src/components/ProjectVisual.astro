@@ -1,15 +1,19 @@
 ---
 import type { Locale } from '../i18n';
 import type { ProjectVisual } from '../data/projects';
+import { publicFileExists } from '../lib/assets';
 
 interface Props {
   visual: ProjectVisual;
   locale: Locale;
   name: string;
   decorative?: boolean;
+  src?: string;
+  alt?: string;
+  fit?: 'cover' | 'contain';
 }
 
-const { visual, locale, name, decorative = false } = Astro.props;
+const { visual, locale, name, decorative = false, src, alt, fit } = Astro.props;
 
 const copy = {
   en: {
@@ -84,6 +88,18 @@ const gridId = `pv-grid-${visual}`;
 const arrowId = `pv-arrow-${visual}`;
 ---
 
+{src && publicFileExists(src) ? (
+  <img
+    class:list={['screenshot', { 'screenshot-contain': fit === 'contain' }]}
+    src={src}
+    alt={decorative ? '' : (alt ?? label)}
+    width="1600"
+    height="1024"
+    loading="lazy"
+    decoding="async"
+    aria-hidden={decorative ? 'true' : undefined}
+  />
+) : (
 <svg
   class="diagram"
   viewBox="0 0 500 320"
@@ -276,8 +292,24 @@ const arrowId = `pv-arrow-${visual}`;
     )
   }
 </svg>
+)}
 
 <style>
+  .screenshot {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 25 / 16;
+    object-fit: cover;
+    object-position: top center;
+  }
+
+  .screenshot-contain {
+    object-fit: contain;
+    object-position: center;
+    background: var(--bg);
+  }
+
   .diagram {
     display: block;
     width: 100%;

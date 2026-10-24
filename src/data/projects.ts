@@ -5,13 +5,19 @@ export type L10n = Record<Locale, string>;
 export type ProjectVisual = 'ciclomart' | 'courseclash' | 'cyclingsafety';
 
 export interface ProjectLink {
-  key: 'frontend' | 'backend' | 'repository';
+  key: 'frontend' | 'backend' | 'repository' | 'paper';
   href: string;
 }
 
 export interface Decision {
   title: L10n;
   body: L10n;
+}
+
+export interface ProjectImage {
+  src: string;
+  alt: L10n;
+  fit?: 'cover' | 'contain';
 }
 
 export interface Project {
@@ -24,6 +30,7 @@ export interface Project {
   technologies: string[];
   links: ProjectLink[];
   visual: ProjectVisual;
+  gallery?: Partial<Record<Locale, ProjectImage[]>>;
   detail: {
     overview: L10n;
     problem: L10n;
@@ -35,6 +42,30 @@ export interface Project {
     limitations?: L10n;
   };
 }
+
+const courseclashGallery: ProjectImage[] = [
+  {
+    src: '/images/projects/courseclash-landing.webp',
+    alt: {
+      en: 'CourseClash landing page',
+      es: 'Landing de CourseClash',
+    },
+  },
+  {
+    src: '/images/projects/courseclash-login.webp',
+    alt: {
+      en: 'CourseClash sign-in screen',
+      es: 'Pantalla de inicio de sesión de CourseClash',
+    },
+  },
+  {
+    src: '/images/projects/courseclash-duel.webp',
+    alt: {
+      en: 'CourseClash academic duel screen',
+      es: 'Pantalla de duelos académicos de CourseClash',
+    },
+  },
+];
 
 export const projects: Project[] = [
   {
@@ -72,6 +103,26 @@ export const projects: Project[] = [
       },
     ],
     visual: 'ciclomart',
+    gallery: {
+      en: [
+        {
+          src: '/images/projects/ciclomart-en.webp',
+          alt: {
+            en: 'CicloMart English landing page with the hero and best sellers',
+            es: 'Landing de CicloMart en inglés con el hero y los más vendidos',
+          },
+        },
+      ],
+      es: [
+        {
+          src: '/images/projects/ciclomart-es.webp',
+          alt: {
+            en: 'CicloMart Spanish landing page with the hero and best sellers',
+            es: 'Landing de CicloMart en español con el hero y los más vendidos',
+          },
+        },
+      ],
+    },
     detail: {
       overview: {
         en: 'CicloMart is a two-repository marketplace where cyclists list bicycles and spare parts, and buyers search, filter, and purchase through a managed checkout.',
@@ -166,6 +217,10 @@ export const projects: Project[] = [
       },
     ],
     visual: 'courseclash',
+    gallery: {
+      en: courseclashGallery,
+      es: courseclashGallery,
+    },
     detail: {
       overview: {
         en: 'CourseClash is an educational platform that motivates students with achievements, rankings, profile customization, and real-time duels. It was built with a small team to practise software architecture in a realistic product.',
@@ -262,8 +317,34 @@ export const projects: Project[] = [
         key: 'repository',
         href: 'https://github.com/w1sec0d/CyclingSafety',
       },
+      {
+        key: 'paper',
+        href: '/docs/CyclingSafety.pdf',
+      },
     ],
     visual: 'cyclingsafety',
+    gallery: {
+      en: [
+        {
+          src: '/images/projects/cyclingSafety-en.webp',
+          alt: {
+            en: 'CyclingSafety showcase: phone logger, confusion matrix, GPS event map, and ESP32 prototype',
+            es: 'Vista general de CyclingSafety: registrador en el teléfono, matriz de confusión, mapa de eventos GPS y prototipo ESP32',
+          },
+          fit: 'contain',
+        },
+      ],
+      es: [
+        {
+          src: '/images/projects/cyclingSafety-es.webp',
+          alt: {
+            en: 'CyclingSafety showcase in Spanish: phone logger, confusion matrix, GPS event map, and ESP32 prototype',
+            es: 'Vista general de CyclingSafety en español: registrador en el teléfono, matriz de confusión, mapa de eventos GPS y prototipo ESP32',
+          },
+          fit: 'contain',
+        },
+      ],
+    },
     detail: {
       overview: {
         en: 'CyclingSafety turns smartphone and wearable inertial signals into a multiclass classification of cycling risk events, then explores deploying that model on a low-cost ESP32 device.',

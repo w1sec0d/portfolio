@@ -23,7 +23,10 @@ export const SITE = {
 /** Configurable asset paths — drop the real files here when available. */
 export const ASSETS = {
   portrait: '/images/carlos-ramirez.webp',
-  cv: '/cv/carlos-ramirez-cv.pdf',
+  cv: {
+    en: '/cv/carlos-ramirez-cv.pdf',
+    es: '/cv/carlos-ramirez-cv-es.pdf',
+  },
 } as const;
 
 export type SocialKey = keyof typeof SITE.links;

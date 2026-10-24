@@ -23,7 +23,12 @@ metrics, testimonials, awards, dates, employers, or links.
 - `npm run build` → `astro build` (emits `dist/`).
 - `npm run preview` → `astro preview`.
 - `npm run check` → `astro check`.
-- `npm run deploy` → `astro build && wrangler deploy --assets ./dist ...`.
+- `npm run deploy` → `astro build && wrangler deploy --config wrangler.deploy.jsonc`.
+
+`wrangler.deploy.jsonc` is the active deploy config: static assets from
+`dist/`, `404-page` not-found handling, observability, and the
+`carlosramirez.app` custom domain. `wrangler login` is required once per
+machine. The site is live on the existing `portfolio` Worker.
 
 `cf build` / `cf deploy` currently require a Cloudflare Build Output
 Specification; pure static Astro only emits `dist/`. Use the scripts above.
@@ -63,8 +68,25 @@ glassmorphism, stock imagery, fake terminals, and decorative motion.
 | Asset | Expected path | Fallback |
 | --- | --- | --- |
 | Portrait | `public/images/carlos-ramirez.webp` (`.jpg/.png/.avif` accepted) | `PortraitFrame` placeholder |
-| CV | `public/cv/carlos-ramirez-cv.pdf` | disabled CV button + "pending" |
-| Project visuals | inline SVG in `ProjectVisual.astro` | swap in real screenshots when available |
+| CV (EN) | `public/cv/carlos-ramirez-cv.pdf` | disabled CV button + "pending" |
+| CV (ES) | `public/cv/carlos-ramirez-cv-es.pdf` | disabled CV button + "pending" |
+| Project galleries | `public/images/projects/*.webp` | inline SVG in `ProjectVisual.astro` |
+| Academic paper | `public/docs/CyclingSafety.pdf` | Spanish-only PDF; linked from CyclingSafety |
+
+Current gallery files:
+
+```
+ciclomart-en.webp
+ciclomart-es.webp
+courseclash-landing.webp
+courseclash-login.webp
+courseclash-duel.webp
+cyclingSafety-en.webp
+cyclingSafety-es.webp
+```
+
+Use `fit: 'contain'` on wide posters whose edge labels must not be cropped;
+the default is `cover` for UI screenshots.
 
 `src/lib/assets.ts` checks `public/` at build time. Do not hardcode a
 fabricated portrait or CV.
@@ -73,10 +95,13 @@ fabricated portrait or CV.
 
 1. Add an entry to `src/data/projects.ts` with EN and ES fields and a
    `visual` key.
-2. Add a diagram branch to `src/components/ProjectVisual.astro` (localized
-   labels, `fill="none"` on open paths).
-3. The homepage cards and `/projects/` routes are generated automatically.
-4. Run `npm run check` and `npm run build`, then verify both languages.
+2. Add a `gallery` map (per locale) with `{ src, alt }` entries if screenshots
+   exist. The card uses the first available image; the detail page renders the
+   full gallery.
+3. Keep a `ProjectVisual.astro` SVG branch as the fallback (localized labels,
+   `fill="none"` on open paths).
+4. The homepage cards and `/projects/` routes are generated automatically.
+5. Run `npm run check` and `npm run build`, then verify both languages.
 
 ## Quality bar
 

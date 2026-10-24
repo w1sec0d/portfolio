@@ -1,9 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ProjectVisual from './ProjectVisual.astro';
+import ProjectGallery from './ProjectGallery.astro';
 import { routes, t, type Locale } from '../i18n';
 import { getAdjacentProjects, type Project } from '../data/projects';
 import { SITE } from '../data/site';
+import { publicFileExists } from '../lib/assets';
 
 interface Props {
   project: Project;
@@ -13,6 +15,12 @@ interface Props {
 const { project, locale } = Astro.props;
 const ui = t(locale);
 const { previous, next } = getAdjacentProjects(project.slug);
+const gallery = (project.gallery?.[locale] ?? []).filter((image) =>
+  publicFileExists(image.src)
+);
+const links = project.links.filter(
+  (link) => !link.href.startsWith('/') || publicFileExists(link.href)
+);
 
 const bodySections = [
   { id: 'overview', label: ui.detail.overview, body: project.detail.overview[locale] },
@@ -53,7 +61,7 @@ const toc = [
 
       <div class="detail-actions">
         {
-          project.links.map((link) => (
+          links.map((link) => (
             <a
               class="btn btn-secondary"
               href={link.href}
@@ -69,13 +77,19 @@ const toc = [
   </header>
 
   <div class="container detail-visual-wrap">
-    <figure class="detail-visual">
-      <ProjectVisual
-        visual={project.visual}
-        locale={locale}
-        name={project.name}
-      />
-    </figure>
+    {
+      gallery.length > 0 ? (
+        <ProjectGallery images={gallery} locale={locale} />
+      ) : (
+        <figure class="detail-visual">
+          <ProjectVisual
+            visual={project.visual}
+            locale={locale}
+            name={project.name}
+          />
+        </figure>
+      )
+    }
   </div>
 
   <section class="section detail-body">
@@ -165,7 +179,7 @@ const toc = [
           <h2 id="links">{ui.detail.links}</h2>
           <ul class="link-list">
             {
-              project.links.map((link) => (
+              links.map((link) => (
                 <li>
                   <a href={link.href} target="_blank" rel="noopener noreferrer">
                     {ui.projects[link.key]}

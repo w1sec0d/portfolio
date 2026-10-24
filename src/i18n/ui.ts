@@ -46,6 +46,7 @@ export interface UIStrings {
     frontend: string;
     backend: string;
     repository: string;
+    paper: string;
     openProject: string;
     index: string;
     project: string;
@@ -187,6 +188,7 @@ export const ui: Record<Locale, UIStrings> = {
       frontend: 'Frontend',
       backend: 'Backend',
       repository: 'Repository',
+      paper: 'Academic paper (Spanish only)',
       openProject: 'Read the case study',
       index: 'Index',
       project: 'Project',
@@ -332,6 +334,7 @@ export const ui: Record<Locale, UIStrings> = {
       frontend: 'Frontend',
       backend: 'Backend',
       repository: 'Repositorio',
+      paper: 'Artículo académico (solo en español)',
       openProject: 'Leer el caso',
       index: 'Índice',
       project: 'Proyecto',
